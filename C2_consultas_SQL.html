@@ -615,8 +615,7 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;DROP TABLE IF EXISTS courses&#39;&#39;&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;DROP TABLE IF EXISTS courses&#39;&#39;&#39;</span><span class="p">)</span>
 <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    CREATE TABLE courses (</span>
 <span class="s2">        course_id SERIAL PRIMARY KEY,</span>
@@ -666,6 +665,11 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Records created successfully
+</pre></div>
+</div>
+</div>
 </div>
 <p><img alt="image" src="_images/create_table_courses.png" /></p>
 <p style="text-align: center; width: 100%;">Figura 7. Vista en pgAdmin de la creación de la base de datos courses.</p></section>
@@ -690,6 +694,13 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 <span class="n">results</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Autor: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, Cantidad de Cursos Publicados: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Autor: Bob Dillon, Cantidad de Cursos Publicados: 4
+Autor: Elvis Presly, Cantidad de Cursos Publicados: 1
+Autor: Uncle Sam, Cantidad de Cursos Publicados: 1
 </pre></div>
 </div>
 </div>
@@ -785,6 +796,11 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Records created successfully
+</pre></div>
+</div>
+</div>
 </div>
 <p><img alt="image" src="_images/create_table_users.png" /></p>
 <p style="text-align: center; width: 100%;">Figura 8. Vista en pgAdmin de la creación de la base de datos users.</p></section>
@@ -805,6 +821,13 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 <span class="n">results</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Año: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">, Cantidad de Usuarios: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Año: 2018, Cantidad de Usuarios: 13
+Año: 2019, Cantidad de Usuarios: 4
+Año: 2020, Cantidad de Usuarios: 8
 </pre></div>
 </div>
 </div>
@@ -835,6 +858,14 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ID de Usuario: 4, Fecha de Nacimiento: 1998-05-24, Email: mtanswill3@dedecms.com, Día de Nacimiento: Sunday
+ID de Usuario: 12, Fecha de Nacimiento: 1983-05-26, Email: uglayzerb@pinterest.com, Día de Nacimiento: Thursday
+ID de Usuario: 1, Fecha de Nacimiento: 1973-05-31, Email: gbode0@imgur.com, Día de Nacimiento: Thursday
+ID de Usuario: 2, Fecha de Nacimiento: 2003-05-31, Email: lgisbey1@mail.ru, Día de Nacimiento: Saturday
+</pre></div>
+</div>
+</div>
 </div>
 <p>La consulta filtra los registros de usuarios cuyos cumpleaños están en el mes de mayo y luego los ordena por el día de nacimiento dentro de mayo. Además, utiliza la función TO_CHAR para obtener el nombre del día de la semana correspondiente a la fecha de nacimiento y lo muestra en la columna “user_day_of_birth”. Luego, se recuperan los resultados de la consulta y se muestran en un bucle for.</p>
 </section>
@@ -860,6 +891,14 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
     <span class="n">user_id</span><span class="p">,</span> <span class="n">user_name</span><span class="p">,</span> <span class="n">user_email_id</span><span class="p">,</span> <span class="n">created_ts</span><span class="p">,</span> <span class="n">created_year</span> <span class="o">=</span> <span class="n">row</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ID de Usuario: </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">, Nombre: </span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s2">, Email: </span><span class="si">{</span><span class="n">user_email_id</span><span class="si">}</span><span class="s2">, Fecha de Creación: </span><span class="si">{</span><span class="n">created_ts</span><span class="si">}</span><span class="s2">, Año de Creación: </span><span class="si">{</span><span class="n">created_year</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ID de Usuario: 8, Nombre: CYBIL LISSIMORE, Email: clissimore7@pinterest.com, Fecha de Creación: 2019-12-09 14:08:30, Año de Creación: 2019
+ID de Usuario: 25, Nombre: PHYLYS ASLIE, Email: paslieo@qq.com, Fecha de Creación: 2019-10-01 01:34:28, Año de Creación: 2019
+ID de Usuario: 12, Nombre: UNA GLAYZER, Email: uglayzerb@pinterest.com, Fecha de Creación: 2019-09-17 03:24:21, Año de Creación: 2019
+ID de Usuario: 17, Nombre: YANKEE JELF, Email: yjelfg@wufoo.com, Fecha de Creación: 2019-09-16 16:09:12, Año de Creación: 2019
 </pre></div>
 </div>
 </div>
@@ -895,6 +934,15 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gender  	  user_count
+------------------------------
+Female     	         13
+Male       	         10
+Not Specified 	          2
+</pre></div>
+</div>
+</div>
 </div>
 <p>La consulta utiliza <code class="docutils literal notranslate"><span class="pre">CASE</span></code> para traducir las etiquetas de género ‘M’ a ‘Male’, ‘F’ a ‘Female’ y cualquier otro valor a ‘Not Specified’. Luego, usando <code class="docutils literal notranslate"><span class="pre">COUNT</span></code> para contar la cantidad de usuarios en cada categoría de género y le da un alias user_count. Agrupa los resultados por género utilizando <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> y los ordena en forma descendente por la cantidad de usuarios en cada categoría.</p>
 <p>Al final, recopila los resultados de la consulta en la variable results utilizando <code class="docutils literal notranslate"><span class="pre">cursor.fetchall()</span></code> y los muestra en la consola, indicando el género y la cantidad de usuarios en cada categoría. Esto proporciona una visión general de la distribución de género en la tabla de usuarios.</p>
@@ -927,6 +975,37 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
     <span class="n">user_id</span><span class="p">,</span> <span class="n">user_unique_id_last4</span><span class="p">,</span> <span class="n">user_unique_id</span> <span class="o">=</span> <span class="n">row</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user_id</span><span class="si">:</span><span class="s2">10</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">user_unique_id_last4</span><span class="si">:</span><span class="s2">20</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">user_unique_id</span><span class="si">:</span><span class="s2">40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>user_id 	 user_unique_id_last4 	 user_unique_id
+------------------------------------------------------------
+         1 	 8759                 	 88833-8759                              
+         2 	 1029                 	 262501-029                              
+         3 	 2823                 	 391-33-2823                             
+         4 	 1380                 	 1195413-80                              
+         5 	 6869                 	 471-24-6869                             
+         6 	 4933                 	 192374-933                              
+         7 	 4752                 	 749-27-47-52                            
+         8 	 4198                 	 461-75-4198                             
+         9 	 6762                 	 892-36-676-2                            
+        10 	 1646                 	 197-54-1646                             
+        11 	 5258                 	 232-55-52-58                            
+        12 	 3366                 	 898-84-336-6                            
+        13 	 6844                 	 247-95-68-44                            
+        14 	 8943                 	 415-48-894-3                            
+        15 	 5869                 	 403-39-5-869                            
+        16 	 0503                 	 399-83-05-03                            
+        17 	 0411                 	 607-99-0411                             
+        18 	 5785                 	 430-01-578-5                            
+        19 	 6181                 	 571-09-6181                             
+        20 	 0287                 	 478-32-02-87                            
+        21 	 Invalid Unique Id    	                                         
+        22 	 Invalid Unique Id    	                                         
+        23 	 5287                 	 830-40-5287                             
+        24 	 Invalid Unique Id    	 778-0845                                
+        25 	 4478                 	 368-44-4478                             
 </pre></div>
 </div>
 </div>
@@ -966,6 +1045,29 @@ You are connected to -  (&#39;PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_6
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
     <span class="n">country_code</span><span class="p">,</span> <span class="n">user_count</span> <span class="o">=</span> <span class="n">row</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">country_code</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">user_count</span><span class="si">:</span><span class="s2">10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Country Code	User Count
+-------------------------
+1	         1
+229	         1
+249	         1
+351	         1
+370	         1
+380	         1
+420	         1
+48	         1
+54	         1
+55	         1
+598	         1
+62	         3
+63	         1
+7	         2
+81	         1
+84	         1
+86	         4
 </pre></div>
 </div>
 </div>

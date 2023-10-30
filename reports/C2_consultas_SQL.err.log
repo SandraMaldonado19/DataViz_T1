@@ -30,8 +30,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['connection.rollback()', "cursor.execute('''DROP TABLE IF EXISTS courses''')", 'cursor.execute("""', '    CREATE TABLE courses (', '        course_id SERIAL PRIMARY KEY,']
+["cursor.execute('''DROP TABLE IF EXISTS users''')", "cursor.execute('''CREATE TABLE users(", '    user_id SERIAL PRIMARY KEY,', '    user_first_name VARCHAR(30),', '    user_last_name VARCHAR(30),']
 ...
-['    )', '""")', '', '# Confirmar los cambios en la base de datos', 'connection.commit()']
+['    user_unique_id VARCHAR(15),', '    user_phone_no VARCHAR(20),', '    user_dob DATE,', '    created_ts TIMESTAMP', ")''')"]
 -------------------
 
