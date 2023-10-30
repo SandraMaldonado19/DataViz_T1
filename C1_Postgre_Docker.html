@@ -384,8 +384,6 @@ Este procedimiento se realiza a través del siguiente código:</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">postgres</span>
 </pre></div>
 </div>
-<img src="assets/create_dbtask1_1.png" alt="Consola Windows PowerShell para ejecutar el cliente de Docker" width="1000px" class="bg-primary" style="display: block; margin: 0 auto;">
-<p style="text-align: center; width: 100%;">Figura 1. Consola Windows PowerShell para ejecutar el cliente de Docker</p>
 <p><img alt="image" src="_images/create_dbtask1_1.png" /></p>
 <p style="text-align: center; width: 100%;">Figura 1. Consola Windows PowerShell para ejecutar el cliente de Docker</p>
 <section id="creacion-de-la-base-de-datos">
@@ -401,11 +399,11 @@ Este procedimiento se realiza a través del siguiente código:</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="p">-</span><span class="n">-name</span><span class="p">=</span><span class="n">dbtask1-postgres</span> <span class="n">-e</span> <span class="n">POSTGRES_USER</span><span class="p">=</span><span class="n">dbtask1</span> <span class="n">-e</span> <span class="n">POSTGRES_PASSWORD</span><span class="p">=</span><span class="n">password</span> <span class="n">-e</span> <span class="n">POSTGRES_DB</span><span class="p">=</span><span class="n">dbtask1</span> <span class="n">-p</span> <span class="n">5432</span><span class="p">:</span><span class="n">5432</span> <span class="n">-d</span> <span class="n">postgres</span>
 </pre></div>
 </div>
-<img src="assets/create_dbtask1_2.png" alt="Creación de la base de datos `dbtask1` con el puerto expuesto" width="1000px" class="bg-primary" style="display: block; margin: 0 auto;">
+<p><img alt="image" src="_images/create_dbtask1_2.png" /></p>
 <p style="text-align: center; width: 100%;">Figura 2. Creación de la base de datos dbtask1 con el puerto expuesto</p>
 <p>De esta manera, ya tendría una instancia de base de datos de PostgreSQL. En este caso, hemos expuesto el puerto del contenedor para conexiones externas. En <code class="docutils literal notranslate"><span class="pre">Docker Desktop</span></code> podrá visualizar la instancia de <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span></code> que el contenedor ha creado, la cual tiene las credenciales asignadas previamente.</p>
-<img src="assets/create_dbtask1_3.png" alt="Docker Desktop ejecutando el contenedor con la instancia de PostgreSQL" width="1000px" class="bg-primary" style="display: block; margin: 0 auto;">
-<p style="text-align: center; width: 100%;">Figura 2. Docker Desktop ejecutando el contenedor con la instancia de PostgreSQL</p>
+<p><img alt="image" src="_images/create_dbtask1_3.png" /></p>
+<p style="text-align: center; width: 100%;">Figura 3. Docker Desktop ejecutando el contenedor con la instancia de PostgreSQL</p>
 </section>
 </section>
 
