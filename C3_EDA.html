@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cardano USD (ADA-USD) &#8212; Introducción a PostgreSQL y Docker - Práctica</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'C3_EDA';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Configuraciones para la conexión con la base de datos" href="C2_consultas_SQL.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logouninorte.png" class="logo__image only-light" alt="Introducción a PostgreSQL y Docker - Práctica - Home"/>
+    <script>document.write(`<img src="_static/logouninorte.png" class="logo__image only-dark" alt="Introducción a PostgreSQL y Docker - Práctica - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Introducción a PostgreSQL y Docker - Práctica
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="C1_Postgre_Docker.html">PostgreSQL y Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C2_consultas_SQL.html">Configuraciones para la conexión con la base de datos</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Cardano USD (ADA-USD)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://sandramaldonado19.github.io/DataViz_T1/intro.html" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://sandramaldonado19.github.io/DataViz_T1/intro.html/issues/new?title=Issue%20on%20page%20%2FC3_EDA.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/C3_EDA.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cardano USD (ADA-USD)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cargue-de-datos">Cargue de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#organizacion-de-datos">Organización de datos</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-datos">Visualización de datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#candlestick">Candlestick</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eda">EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalidades">Generalidades</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Datos</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion">Correlación</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#open">Open</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#high">High</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#low">Low</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#close-y-adj-close">Close y Adj close</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#volumen">Volumen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cardano-usd-ada-usd">
+<h1>Cardano USD (ADA-USD)<a class="headerlink" href="#cardano-usd-ada-usd" title="Permalink to this heading">#</a></h1>
+<section id="datos">
+<h2>Datos<a class="headerlink" href="#datos" title="Permalink to this heading">#</a></h2>
+<section id="cargue-de-datos">
+<h3>Cargue de datos<a class="headerlink" href="#cargue-de-datos" title="Permalink to this heading">#</a></h3>
+<p>Los datos los utilizados para este estudio, se encuentra en linea en el siguiente link: “<a class="reference external" href="https://raw.githubusercontent.com/lihkir/Uninorte/main/AppliedStatisticMS/DataVisualizationRPython/Lectures/Python/PythonDataSets/ADA-USD.csv">https://raw.githubusercontent.com/lihkir/Uninorte/main/AppliedStatisticMS/DataVisualizationRPython/Lectures/Python/PythonDataSets/ADA-USD.csv</a>”. Por lo que se procede a importar los datos con el siguiente código.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar los datos desde el archivo CSV</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lihkir/Uninorte/main/AppliedStatisticMS/DataVisualizationRPython/Lectures/Python/PythonDataSets/ADA-USD.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="c1">#Asignamos una variable para leer los datos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cargar los datos desde el archivo CSV</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lihkir/Uninorte/main/AppliedStatisticMS/DataVisualizationRPython/Lectures/Python/PythonDataSets/ADA-USD.csv&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;pd&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="organizacion-de-datos">
+<h3>Organización de datos<a class="headerlink" href="#organizacion-de-datos" title="Permalink to this heading">#</a></h3>
+<p>Dado que los datos obtenidos tiene una columan de fechas pero no tienen el formato correspondiente, se procede a cambiar este formato.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convertir la columna de fechas a un formato de fecha</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualizacion-de-datos">
+<h2>Visualización de datos<a class="headerlink" href="#visualizacion-de-datos" title="Permalink to this heading">#</a></h2>
+<section id="candlestick">
+<h3>Candlestick<a class="headerlink" href="#candlestick" title="Permalink to this heading">#</a></h3>
+<p>Se visualiza los datos medicante un gráfico tipo Candlestick, también conocido como gráfico de velas, ya que se está analizando datos financieros con un período de tiempo y muestra la apertura, el cierre, el máximo y el mínimo de un activo financiero. De esta forma, es una herramienta esencial en el análisis financiero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un gráfico de candlestick</span>
+<span class="n">mpf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;candle&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;charles&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cardano (ADA-USD) Candlestick Chart&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>En este gráfico se puede evidenciar datos por fecha, donde cada vela muestra el precio de apertura, el precio de cierre, el precio más alto y el precio más bajo durante este período específico. Si el cuerpo de la vela es verde, significa que los precios subieron durante ese período, y si es rojo, bajaron. Las mechas arriba y abajo de la vela dicen cuánto variaron los precios. Podemos usar estos gráficos para detectar tendencias y patrones que pueden ser de ayuda en la toma decisiones de inversión.</p>
+</section>
+</section>
+<section id="eda">
+<h2>EDA<a class="headerlink" href="#eda" title="Permalink to this heading">#</a></h2>
+<p>Hacemos un analisis exploratorio para examinar el conjunto de datos de forma preliminar y para resumir sus características principales, identificar patrones, detectar valores atípicos y entender su estructura antes de realizar análisis o modelado más avanzado. Involucra la visualización de datos, cálculo de estadísticas descriptivas y la búsqueda de relaciones o tendencias para obtener una comprensión inicial de la información contenida en los datos. Para esto, ejecutamos el siguiente código.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sweetviz</span>
+<span class="kn">import</span> <span class="nn">sweetviz</span> <span class="k">as</span> <span class="nn">sv</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">report</span><span class="o">.</span><span class="n">show_html</span><span class="p">(</span><span class="s1">&#39;report.html&#39;</span><span class="p">)</span> <span class="c1"># Generar un informe HTML</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="generalidades">
+<h3>Generalidades<a class="headerlink" href="#generalidades" title="Permalink to this heading">#</a></h3>
+<p>Podemos revisar todos los datos de forma conjunta para tener una visión integral de la información que se está manejando</p>
+<section id="id1">
+<h4>Datos<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<p>Del Dataframe podemos evidenciar que tenemos 7 variables, 6 de ellad corresponden a variables de tipo numerico y sólo una de ellas corresponde a texto. Esto tiene sentido, ya que esta última corresponde a “Date” que son las fechas de cada uno de los datos. Mientras que las demas variables si indican un medición puntual.</p>
+</section>
+<section id="correlacion">
+<h4>Correlación<a class="headerlink" href="#correlacion" title="Permalink to this heading">#</a></h4>
+<p>Por otro lado, podemos evidenciar que casi todas las variables estudiadas presenta una alta correlación entre ellas, a excepcion del volumen que demuestra un poco menos de correlación con las demás variables. Esto puede dar indicios de variables que se pueden excluir de un posible estudio dado que unas representan el comportamiento de la otra.
+A manera de un ejemplo especifico tenemos la variable “Open” que se encuentra fuertemente correlacionada con las variables “High”, “Low”, “Close”, “Adj Close”. Pero se encuentra un poco menos correlacionada con la variable “Volume”. Esto se evidencia en el siguiente gráfico.</p>
+<img src="assets/Imagen4.png" alt="Gráfico de correlación" width="700px" class="bg-primary" style="display: block; margin: 0 auto;">
+<p style="text-align: center; width: 100%;">Figura 1. Gráfico de correlación</p></section>
+</section>
+<section id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<p>Se revisan los datos registrados en cada una de las variables</p>
+<img src="assets/Imagen5.png" alt="Análisis exploratorio de variables" width="800px" class="bg-primary" style="display: block; margin: 0 auto;">
+<p style="text-align: center; width: 100%;">Figura 2. Análisis exploratorio de variables</p><section id="open">
+<h4>Open<a class="headerlink" href="#open" title="Permalink to this heading">#</a></h4>
+<p>Se puede evidenciar que el valor más alto y más bajo de la variable “Open” corresponde a 2.97 y 0.03 respectivamente. Asimismo, que el 95% de
+los datos para esta variable tienen un valor igual o inferior a 1.76, lo que supone que hay pocos valores con un valor
+superior a este. Por otro lado, el valor promedio en promedio de los datos es 0.37.
+Estos estadísticos resumen la distribución de la variable “Open”, lo que te permite comprender la gama e intevalo de valores que toma [0.03 , 2.97], la tendencia central (promedio:0.37 y mediana:0.09) y la posición relativa de ciertos percentiles clave en la distribución de datos.</p>
+</section>
+<section id="high">
+<h4>High<a class="headerlink" href="#high" title="Permalink to this heading">#</a></h4>
+<p>Los resultados muestran que la variable “High” tiene un rango que va desde 0.02 hasta 3.10, con la mayoría de
+los datos (el 95%) por debajo de 1.87, indicando una concentración de valores más bajos. El valor promedio de la
+variable es aproximadamente 0.39.</p>
+</section>
+<section id="low">
+<h4>Low<a class="headerlink" href="#low" title="Permalink to this heading">#</a></h4>
+<p>En cuanto a los estadísticos de la variable “Low”, el valor máximo es 2.91, que representa el punto más  alto de los datos, mientras que el valor mínimo es 0.02, que es el punto más bajo registrado. El valor 95% es 1.63, lo que indica que el 95% de los datos son igual o inferiores a este valor, proporcionando una comprensión  de la mayoría de los datos. El tercer cuartil (Q3) es 0.28, lo que significa que el 75% de los datos tienen un valor igual o inferior a este número. El promedio (AVG) es 0.35, representando el valor típico de la variable. La mediana es 0.09, lo que implica que el 50% de los datos son igual o inferiores a este valor. El valor 5% es 0.03, lo que señala que solo el 5% de los datos superan este umbral y lo que nos puede dar indicios de valores atípicos o muy bajos en la distribución.</p>
+</section>
+<section id="close-y-adj-close">
+<h4>Close y Adj close<a class="headerlink" href="#close-y-adj-close" title="Permalink to this heading">#</a></h4>
+<p>Con respecto a la variable “Close” y la variable “Adj close”, el valor más alto alcanza 2.97,mientras que el más bajo es 0,02. La mayoría de los datos (el 95%) se encuentra por debajo de 1.78, que es el valor 95%. El tercer cuartil (Q3) se ubica en 0.30, lo que significa que el 75% de los datos son igual o más bajos. El valor promedio (AVG) es 0.38 y la mediana está en 0.09, lo que indica que la mitad de los datos son menores a este valor. El valor 5% es 0.03, lo que podría señalar valores atípicos o muy bajos. Estos datos nos ayudan a entender cómo se distribuye estás variables. Cabe resaltar que los datos obtenidos en ambas variables son iguales, lo que podría señalar alguna información sobre correlación. Esto se sustenta con el gráfico de correlacion donde vemos que estás dos variables tienen una alta correlación.</p>
+</section>
+<section id="volumen">
+<h4>Volumen<a class="headerlink" href="#volumen" title="Permalink to this heading">#</a></h4>
+<p>Los datos muestran que el valor máximo de volumen alcanza 19.1 mil millones. Además, el 95% de los datos se encuentra por debajo de 6.0 mil millones, lo que significa que la mayoría de las observaciones tienen un volumen menor. El tercer cuartil (Q3) está en 0.7  mil millones, lo que indica que el 75% de los datos tienen un volumen igual o menor. El promedio (AVG) es de 1.1 mil millones, y la mediana es de 0.1 mil millones, lo que sugiere  que la mitad de los datos tienen un volumen igual o menor a este valor. El primer cuartil (Q1)  es 0.1 mil millones, y el valor 5% es 0.00 mil millones, lo que podría indicar que hay algunas  observaciones con volúmenes muy bajos. En resumen, estos estadísticos nos dan una idea de cómo  se distribuye el volumen, con la mayoría de los valores por debajo de 6.0 mil millones y un rango que va desde 0.00 mil millones hasta 19.1 mil millones.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="C2_consultas_SQL.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Configuraciones para la conexión con la base de datos</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cargue-de-datos">Cargue de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#organizacion-de-datos">Organización de datos</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-datos">Visualización de datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#candlestick">Candlestick</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eda">EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalidades">Generalidades</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Datos</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion">Correlación</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#open">Open</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#high">High</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#low">Low</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#close-y-adj-close">Close y Adj close</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#volumen">Volumen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sandra Maldonado - Sherine Menco
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
